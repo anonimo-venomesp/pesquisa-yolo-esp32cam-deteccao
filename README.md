@@ -1,5 +1,64 @@
-Aqui esta o codigo fonte do projeto VenomESP focado em deteccao de animais peconhentos e eu garanto que essa solucao bota no chinelo muito sistema fechado e caro do mercado. Nossa equipe ficou indignada com a quantidade de acidentes com cobras e escorpioes em areas remotas e decidimos criar um treco barato usando a plaquinha ESP32 CAM e a rede neural YOLOv8. O aparelho fotografa o ambiente e joga a imagem para um servidor que localiza os bichos na hora.
+# VenomESP - Detecção em Tempo Real de Animais Peçonhentos
 
-Os resultados foram absurdos de bons. A precisao chegou a 91 por cento para as cobras e 93 por cento nos escorpioes. Qualquer pessoa que trabalha com inteligencia artificial sabe que tirar esses numeros de um modelo miniatura feito o YOLOv8 Nano atrelado a uma placa de baixo custo e um baita desafio superado. O diretorio pesos guarda os arquivos pt originais com o conhecimento do modelo entao voce nem precisa esquentar a cabeca com treinamento. Mas se voce for do tipo cetico e quiser ver como treinamos deixamos os arquivos originais do Jupyter soltos na pasta treinamento.
+Sistema embarcado para localizar cobras e escorpiões instantaneamente utilizando visão computacional (YOLOv8) e hardware de baixo custo (ESP32-CAM). O projeto foca em atender áreas de risco através de uma solução acessível, rápida e precisa.
 
-Para subir o servidor no seu computador e so entrar no diretorio api e mandar o pip instalar as bibliotecas do requirements txt. A pasta esp32cam_firmware guarda o arquivo do Arduino que voce compila e grava na placa em dois palitos. Tem tambem a pasta webcam com codigos em Python puros para quem quer testar a deteccao direto na camera do computador sem precisar do hardware externo. O negocio roda liso e os scripts ja estao configurados para disparar mensagens no Telegram assim que a rede neural identificar a ameaca na lente da camera.
+## Arquitetura do Projeto
+
+O sistema funciona integrando o microcontrolador ESP32-CAM, que fotografa o ambiente continuamente, com um servidor FastAPI. O servidor recebe as imagens e executa a rede neural YOLOv8 Nano treinada para identificar as ameaças. Quando um animal é localizado, a plataforma envia alertas imediatos via Telegram.
+
+## Resultados e Métricas
+
+Os testes atestam a viabilidade de rodar modelos leves de visão computacional vinculados a hardwares limitados. A rede processa os dados com alta acurácia, conforme registrado nos ensaios oficiais descritos abaixo.
+
+**Cobras:**
+- Precisão: 91.0%
+- Revocação: 85.0%
+- mAP@50: 91.9%
+- FPS Teórico: ~370
+
+**Escorpiões:**
+- Precisão: 93.4%
+- Revocação: 90.5%
+- mAP@50: 92.2%
+- FPS Teórico: ~294
+
+## Organização do Repositório
+
+O código fonte está dividido nos seguintes módulos principais.
+
+### 1. API (Backend)
+O diretório `api` hospeda o servidor escrito em FastAPI. Ele gerencia as requisições HTTP, processa as imagens que chegam do hardware e aciona as mensagens do bot.
+- Instale os requisitos através do arquivo `requirements.txt`.
+- Configure o token editando o arquivo `.env.example`.
+- Inicie o servidor rodando o arquivo `main.py`.
+
+### 2. Firmware do Microcontrolador
+A pasta `esp32cam_firmware` contém o código em C++ estruturado para gravar na placa AI Thinker ESP32-CAM usando o Arduino IDE. O script conecta o dispositivo na rede Wi-Fi e define a frequência das capturas.
+
+### 3. Modelos Treinados
+O diretório `pesos` guarda os arquivos `.pt` originais. Os pesos das cobras (`cobras_best.pt`) e dos escorpiões (`escorpioes_best.pt`) pesam aproximadamente 6MB cada e já estão configurados para uso imediato no servidor ou na webcam.
+
+### 4. Metodologia de Treinamento
+Para garantir total transparência científica, a pasta `treinamento` oferece os códigos originais (arquivos `.ipynb`) que utilizamos para ensinar a rede neural. O treinamento das cobras baseia-se num banco do Kaggle, enquanto os escorpiões foram processados via Roboflow. O código demonstra o passo a passo de configuração e o treino exato de 100 épocas (cobras) e 50 épocas (escorpiões).
+
+### 5. Testes Locais
+O diretório `webcam` possui códigos em Python para avaliar os pesos usando a câmera do seu computador. É ideal para validar o funcionamento da rede neural sem necessitar da instalação do microcontrolador na rede local.
+
+## Guia de Instalação Rápida
+
+Comece preparando o servidor central:
+
+```bash
+cd api
+pip install -r requirements.txt
+cp .env.example .env
+python main.py
+```
+
+Para realizar o teste pela câmera local, garanta que os pesos estão mapeados corretamente no script:
+
+```bash
+cd webcam
+pip install opencv-python ultralytics
+python detector_cobras.py --model ../pesos/cobras_best.pt
+```
