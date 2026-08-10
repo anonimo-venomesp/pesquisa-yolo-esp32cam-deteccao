@@ -12,6 +12,9 @@ latinoware-venomesp/
 │   └── .env.example                # Variáveis de ambiente (exemplo)
 ├── esp32cam_firmware/              # Firmware ESP32-CAM
 │   └── esp32cam_firmware.ino       # Código Arduino
+├── pesos/                          # Pesos dos Modelos Treinados
+│   ├── cobras_best.pt              # Pesos do modelo de cobras (YOLOv8n)
+│   └── escorpioes_best.pt          # Pesos do modelo de escorpiões (YOLOv8n)
 ├── treinamento/                    # Códigos de Treinamento dos Modelos
 │   ├── notebook_treinamento_cobras.ipynb     # Treino de Cobras (Kaggle)
 │   └── notebook_treinamento_escorpioes.ipynb # Treino de Escorpiões (Roboflow)
@@ -54,7 +57,7 @@ python detector_escorpioes.py
 
 ## Modelos
 
-Os modelos YOLOv8-nano treinados não estão incluídos neste repositório devido ao tamanho (~6MB cada).
+Os pesos treinados (arquivos `.pt`) estão disponíveis na pasta `pesos/`. Eles são necessários para a execução dos scripts de inferência.
 
 ### Métricas de Performance
 
