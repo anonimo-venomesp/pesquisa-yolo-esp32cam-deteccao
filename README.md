@@ -12,6 +12,8 @@ latinoware-venomesp/
 │   └── .env.example                # Variáveis de ambiente (exemplo)
 ├── esp32cam_firmware/              # Firmware ESP32-CAM
 │   └── esp32cam_firmware.ino       # Código Arduino
+├── treinamento/                    # Códigos de Treinamento dos Modelos
+│   └── notebook_treinamento_cobras.ipynb # Notebook Jupyter (YOLOv8)
 ├── webcam/                         # Detectores via webcam
 │   ├── detector_cobras.py          # Detector de cobras (YOLOv8)
 │   └── detector_escorpioes.py      # Detector de escorpiões (YOLOv8)
