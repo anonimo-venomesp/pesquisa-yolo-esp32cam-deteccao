@@ -1,10 +1,10 @@
 # VenomESP - Detecção em Tempo Real de Animais Peçonhentos
 
-Sistema embarcado para localizar cobras e escorpiões instantaneamente utilizando visão computacional (YOLOv8) e hardware de baixo custo (ESP32-CAM). O projeto foca em atender áreas de risco através de uma solução acessível, rápida e precisa.
+Sistema embarcado para localizar cobras e escorpiões instantaneamente utilizando visão computacional (YOLOv8n) e hardware de baixo custo (ESP32-CAM). O projeto foca em atender áreas de risco através de uma solução acessível, rápida e precisa.
 
 ## Arquitetura do Projeto
 
-O sistema funciona integrando o microcontrolador ESP32-CAM, que fotografa o ambiente continuamente, com um servidor FastAPI. O servidor recebe as imagens e executa a rede neural YOLOv8 Nano treinada para identificar as ameaças. Quando um animal é localizado, a plataforma envia alertas imediatos via Telegram.
+O sistema funciona integrando o microcontrolador ESP32-CAM, que fotografa o ambiente continuamente, com um servidor FastAPI. O servidor recebe as imagens e executa a rede neural YOLOv8n treinada para identificar as ameaças. Quando um animal é localizado, a plataforma envia alertas imediatos via Telegram.
 
 ## Resultados e Métricas
 
